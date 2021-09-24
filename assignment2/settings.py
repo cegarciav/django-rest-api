@@ -26,7 +26,8 @@ SECRET_KEY = 'l*c3w248h)uuj8ubo7@*((*@qvkbo5@jxw7l+(-5^3nu8^@1f&'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "assignment2-iic3103.herokuapp.com"
+    "assignment2-iic3103.herokuapp.com",
+    "127.0.0.1"
 ]
 
 
@@ -47,6 +48,12 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
     ]
 }
 
