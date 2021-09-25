@@ -5,7 +5,7 @@ from assignment2.leagues.urls import LeagueViewSet
 
 
 # Routers provide a way of automatically determining the URL conf.
-router = routers.DefaultRouter()
+router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'leagues', LeagueViewSet, basename="League")
 
 
