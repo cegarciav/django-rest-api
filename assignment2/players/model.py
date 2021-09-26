@@ -10,7 +10,7 @@ class Player(models.Model):
     id = models.CharField(max_length=30, primary_key=True)
     team_id = models.ForeignKey(Team, on_delete=models.CASCADE, db_column="team_id")
     name = models.CharField(max_length=30)
-    age = models.PositiveIntegerField()
+    age = models.PositiveIntegerField(null=True)
     position =  models.CharField(max_length=30)
     times_trained = models.PositiveIntegerField()
     league = models.URLField(max_length=200)
