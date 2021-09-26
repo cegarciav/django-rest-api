@@ -1,5 +1,6 @@
 from rest_framework import viewsets, status
 from django.shortcuts import get_object_or_404
+from django.db.models import F
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
@@ -82,3 +83,14 @@ class TeamViewSet(viewsets.ViewSet):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+    # PUT Train Players for a Team
+    @action(detail=True, methods=["put"], url_path="players/play")
+    def train_players(self, request, pk=None):
+        queryset = Team.objects.all()
+        team = get_object_or_404(queryset, pk=pk)
+        Player.objects.filter(
+            team_id__in=[team]).update(
+                times_trained=F("times_trained") + 1
+        )
+        return Response(status=status.HTTP_200_OK)

@@ -1,5 +1,6 @@
 from rest_framework import viewsets, status
 from django.shortcuts import get_object_or_404
+from django.db.models import F
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
@@ -121,3 +122,17 @@ class LeagueViewSet(viewsets.ViewSet):
         )
         serializer = PlayerSerializer(players_queryset, many=True)
         return Response(serializer.data)
+
+    # PUT Train Teams for a League
+    @action(detail=True, methods=["put"], url_path="teams/train")
+    def train_teams(self, request, pk=None):
+        queryset = League.objects.all()
+        league = get_object_or_404(queryset, pk=pk)
+        teams_queryset = Team.objects.filter(
+            league_id__in=[league]
+        )
+        Player.objects.filter(
+            team_id__in=teams_queryset).update(
+                times_trained=F("times_trained") + 1
+        )
+        return Response(status=status.HTTP_200_OK)
