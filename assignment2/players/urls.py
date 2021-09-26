@@ -19,3 +19,10 @@ class PlayerViewSet(viewsets.ViewSet):
             player = get_object_or_404(queryset, pk=pk)
             serializer = PlayerSerializer(player)
             return Response(serializer.data)
+
+    # DELETE one Player
+    def destroy(self, request, pk=None):
+            queryset = Player.objects.all()
+            player = get_object_or_404(queryset, pk=pk)
+            player.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
