@@ -5,6 +5,8 @@ from rest_framework.decorators import action
 
 from assignment2.teams.serializer import TeamSerializer
 from assignment2.teams.model import Team
+from assignment2.players.serializer import PlayerSerializer
+from assignment2.players.model import Player
 from .model import League
 from .serializer import LeagueSerializer
 
@@ -98,3 +100,17 @@ class LeagueViewSet(viewsets.ViewSet):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+    # GET Players for a League
+    @action(detail=True, url_path="players")
+    def players(self, request, pk=None):
+        queryset = League.objects.all()
+        league = get_object_or_404(queryset, pk=pk)
+        teams_queryset = Team.objects.filter(
+            league_id__in=[league]
+        )
+        players_queryset = Player.objects.filter(
+            team_id__in=teams_queryset
+        )
+        serializer = PlayerSerializer(players_queryset, many=True)
+        return Response(serializer.data)

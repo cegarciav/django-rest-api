@@ -3,12 +3,14 @@ from rest_framework import routers
 
 from assignment2.leagues.urls import LeagueViewSet
 from assignment2.teams.urls import TeamViewSet
+from assignment2.players.urls import PlayerViewSet
 
 
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'leagues', LeagueViewSet, basename="League")
-router.register(r'teams', TeamViewSet, basename="Team")
+router.register(r'teams', TeamViewSet, basename="Teams")
+router.register(r'players', PlayerViewSet, basename="Player")
 
 
 # Wire up our API using automatic URL routing.
