@@ -27,5 +27,5 @@ class Player(models.Model):
         base_url = env("BASE_URL")
         self.self = f"{base_url}/players/{self.id}"
         self.league = f"{base_url}/leagues/{self.team_id.league_id.id}"
-        self.team = f"{self.self}/teams/{self.team_id.id}"
+        self.team = f"{base_url}/teams/{self.team_id.id}"
         super(Player, self).save(*args, **kwargs)
