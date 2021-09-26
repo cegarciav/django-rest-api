@@ -25,6 +25,13 @@ class TeamViewSet(viewsets.ViewSet):
             serializer = TeamSerializer(team)
             return Response(serializer.data)
 
+    # DELETE one Team and its Players
+    def destroy(self, request, pk=None):
+            queryset = Team.objects.all()
+            team = get_object_or_404(queryset, pk=pk)
+            team.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
     # GET Players for a Team
     @action(detail=True, url_path="players")
     def players(self, request, pk=None):
