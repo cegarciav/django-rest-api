@@ -85,7 +85,7 @@ class TeamViewSet(viewsets.ViewSet):
             )
 
     # PUT Train Players for a Team
-    @action(detail=True, methods=["put"], url_path="players/play")
+    @action(detail=True, methods=["put"], url_path="players/train")
     def train_players(self, request, pk=None):
         queryset = Team.objects.all()
         team = get_object_or_404(queryset, pk=pk)
