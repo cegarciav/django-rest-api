@@ -50,6 +50,13 @@ class LeagueViewSet(viewsets.ViewSet):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+    # DELETE one League and its Teams and Players
+    def destroy(self, request, pk=None):
+            queryset = League.objects.all()
+            league = get_object_or_404(queryset, pk=pk)
+            league.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
     
     # GET Teams for a League
     @action(detail=True, url_path="teams")
