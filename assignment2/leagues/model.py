@@ -18,6 +18,7 @@ class League(models.Model):
 
         base_id = f"{self.name}:{self.sport}"
         self.id = b64encode(base_id.encode()).decode('utf-8')
+        self.id = self.id[:22]
 
         base_url = env("BASE_URL")
         self.self = f"{base_url}/leagues/{self.id}"
