@@ -5,9 +5,9 @@ import environ
 class League(models.Model):
     class Meta:
         db_table = "league"
-    id = models.CharField(max_length=30, primary_key=True)
-    name = models.CharField(max_length=30)
-    sport =  models.CharField(max_length=30)
+    id = models.CharField(max_length=200, primary_key=True)
+    name = models.CharField(max_length=200)
+    sport =  models.CharField(max_length=200)
     teams = models.URLField(max_length=200)
     players = models.URLField(max_length=200)
     self = models.URLField(max_length=200)

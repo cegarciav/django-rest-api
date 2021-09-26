@@ -7,11 +7,11 @@ from assignment2.teams.model import Team
 class Player(models.Model):
     class Meta:
         db_table = "player"
-    id = models.CharField(max_length=30, primary_key=True)
+    id = models.CharField(max_length=200, primary_key=True)
     team_id = models.ForeignKey(Team, on_delete=models.CASCADE, db_column="team_id")
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=200)
     age = models.PositiveIntegerField(null=True)
-    position =  models.CharField(max_length=30)
+    position =  models.CharField(max_length=200)
     times_trained = models.PositiveIntegerField()
     league = models.URLField(max_length=200)
     team = models.URLField(max_length=200)

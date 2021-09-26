@@ -7,10 +7,10 @@ from assignment2.leagues.model import League
 class Team(models.Model):
     class Meta:
         db_table = "team"
-    id = models.CharField(max_length=30, primary_key=True)
+    id = models.CharField(max_length=200, primary_key=True)
     league_id = models.ForeignKey(League, on_delete=models.CASCADE, db_column="league_id")
-    name = models.CharField(max_length=30)
-    city =  models.CharField(max_length=30)
+    name = models.CharField(max_length=200)
+    city =  models.CharField(max_length=200)
     league = models.URLField(max_length=200)
     players = models.URLField(max_length=200)
     self = models.URLField(max_length=200)
