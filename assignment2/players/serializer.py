@@ -15,6 +15,6 @@ class PlayerSerializer(serializers.ModelSerializer):
         )
         extra_kwargs = {
             "name": {"required": True, "allow_blank": False},
-            "age": {"allow_null": True},
+            "age": {"allow_null": False},
             "position": {"required": True, "allow_blank": False}
         }
