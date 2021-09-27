@@ -29,6 +29,23 @@ class LeagueViewSet(viewsets.ViewSet):
 
     # POST one League
     def create(self, request):
+        # Validate input values
+        errors = dict()
+        if "name" in request.data and not isinstance(request.data["name"], str):
+            errors["name"] = ["Name must be a string"]
+        if "sport" in request.data and not isinstance(request.data["sport"], str):
+            errors["sport"] = ["Sport must be a string"]
+        
+        input_data = set(request.data.keys())
+        for non_valid_input in input_data - set(("name", "sport")):
+            errors[non_valid_input] = [f"{non_valid_input.capitalize()} is not valid or read-only field"]
+        if len(errors) > 0:
+            return Response({
+                    "status": "Bad Request",
+                    "errors": errors
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
         serializer = LeagueSerializer(data=request.data)
         try:
             if serializer.is_valid(raise_exception=True):
@@ -44,7 +61,6 @@ class LeagueViewSet(viewsets.ViewSet):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception as e:
-            print(e)
             return Response({
                     "status": "Bad Request",
                     "errors": serializer.errors
@@ -73,6 +89,24 @@ class LeagueViewSet(viewsets.ViewSet):
     # POST one Team for a League
     @teams.mapping.post
     def create_team(self, request, pk=None):
+        # Validate input values
+        errors = dict()
+        if "name" in request.data and not isinstance(request.data["name"], str):
+            errors["name"] = ["Name must be a string"]
+        if "city" in request.data and not isinstance(request.data["city"], str):
+            errors["city"] = ["City must be a string"]
+
+        input_data = set(request.data.keys())
+        for non_valid_input in input_data - set(("name", "city")):
+            errors[non_valid_input] = [f"{non_valid_input.capitalize()} is not valid or read-only field"]
+
+        if len(errors) > 0:
+            return Response({
+                    "status": "Bad Request",
+                    "errors": errors
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
         existing_league = League.objects.filter(pk=pk)
         if len(existing_league) == 0:
             return Response({
@@ -101,7 +135,6 @@ class LeagueViewSet(viewsets.ViewSet):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception as e:
-            print(e)
             return Response({
                     "status": "Bad Request",
                     "errors": serializer.errors

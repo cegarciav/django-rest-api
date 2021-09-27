@@ -9,6 +9,7 @@ class PlayerSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = (
             "id",
+            "times_trained",
             "league",
             "team",
             "self",

@@ -47,6 +47,26 @@ class TeamViewSet(viewsets.ViewSet):
     # POST one Player for a Team
     @players.mapping.post
     def create_player(self, request, pk=None):
+        # Validate input values
+        errors = dict()
+        if "name" in request.data and not isinstance(request.data["name"], str):
+            errors["name"] = ["Name must be a string"]
+        if "position" in request.data and not isinstance(request.data["position"], str):
+            errors["position"] = ["Position must be a string"]
+        if "age" in request.data and not isinstance(request.data["age"], int):
+            errors["age"] = ["Age must be an integer"]
+
+        input_data = set(request.data.keys())
+        for non_valid_input in input_data - set(("name", "position", "age")):
+            errors[non_valid_input] = [f"{non_valid_input.capitalize()} is not valid or read-only field"]
+
+        if len(errors) > 0:
+            return Response({
+                    "status": "Bad Request",
+                    "errors": errors
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
         existing_team = Team.objects.filter(pk=pk)
         if len(existing_team) == 0:
             return Response({
